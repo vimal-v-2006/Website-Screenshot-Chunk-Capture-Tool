@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { capturePresets } from "@/lib/presets";
 import { formatBytes } from "@/lib/utils";
 
@@ -40,6 +40,21 @@ export function CaptureForm() {
     () => capturePresets.find((preset) => preset.id === presetId) ?? capturePresets[0],
     [presetId],
   );
+
+  useEffect(() => {
+    const controller = new AbortController();
+
+    fetch("/api/captures", {
+      method: "DELETE",
+      signal: controller.signal,
+    }).catch(() => {
+      // Silent cleanup attempt on fresh load.
+    });
+
+    setResult(null);
+
+    return () => controller.abort();
+  }, []);
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();

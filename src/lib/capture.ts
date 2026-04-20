@@ -33,6 +33,11 @@ export type CaptureResult = {
   titlePrefix: string;
 };
 
+export async function clearStoredCaptures() {
+  await fs.rm(outputRoot, { recursive: true, force: true });
+  await fs.mkdir(outputRoot, { recursive: true });
+}
+
 export async function captureWebsite({ url, presetId }: CaptureRequest): Promise<CaptureResult> {
   const preset = presetMap[presetId];
 
