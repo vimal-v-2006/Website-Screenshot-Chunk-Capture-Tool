@@ -57,6 +57,14 @@ export async function captureWebsite({ url, presetId }: CaptureRequest): Promise
 
   try {
     await page.goto(url, { waitUntil: "networkidle", timeout: 120000 });
+
+    if (preset.captureMode === "full-page" && preset.pageZoom) {
+      await page.evaluate((zoom) => {
+        document.documentElement.style.zoom = String(zoom);
+      }, preset.pageZoom);
+      await page.waitForTimeout(500);
+    }
+
     await page.evaluate(() => {
       window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
     });

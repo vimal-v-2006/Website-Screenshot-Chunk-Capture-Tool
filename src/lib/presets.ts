@@ -8,19 +8,21 @@ export type CapturePreset = {
   captureMode?: "chunked" | "full-page";
   hideLabel?: boolean;
   deviceScaleFactor?: number;
+  pageZoom?: number;
 };
 
 export const capturePresets: CapturePreset[] = [
   {
     id: "full-page-standard",
     name: "Capture Full Page",
-    width: 2000,
-    height: 1400,
+    width: 1680,
+    height: 1180,
     label: "Standard Full Page",
-    note: "Captures the full website from top to bottom in a cleaner, crisper high-resolution format.",
+    note: "Captures the full website from top to bottom in a cleaner, crisper high-resolution format with a tighter frame.",
     captureMode: "full-page",
     hideLabel: true,
     deviceScaleFactor: 2,
+    pageZoom: 1.12,
   },
   {
     id: "story-1080x1920",
